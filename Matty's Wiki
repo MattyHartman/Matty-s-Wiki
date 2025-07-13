@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Matty's Wiki with Minigames</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f0f8ff; padding: 20px; }
+    h1 { color: #0057b7; }
+    h2 { color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px; }
+    .section { margin-bottom: 30px; }
+    button { margin-top: 10px; padding: 5px 10px; }
+    input { padding: 5px; }
+  </style>
+</head>
+<body>
+  <h1>🏁 Welcome to Matty's Wiki!</h1>
+  <p><strong>Catchphrase:</strong> "Race fast. Think faster."</p>
+
+  <div class="section">
+    <h2>🏆 Race Wins</h2>
+    <ul>
+      <li>Over 5 confirmed race victories</li>
+      <li>Speed, strategy, and stamina — I’ve got all three</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>📚 8th Grade Math Game</h2>
+    <p>Solve this:</p>
+    <p>What is 8 × 7?</p>
+    <input type="number" id="mathAnswer">
+    <button onclick="checkMath()">Submit</button>
+    <p id="mathResult"></p>
+  </div>
+
+  <script>
+    function checkMath() {
+      const answer = document.getElementById('mathAnswer').value;
+      const result = document.getElementById('mathResult');
+      if (parseInt(answer) === 56) {
+        result.textContent = "Correct! You're a math pro.";
+      } else {
+        result.textContent = "Try again!";
+      }
+    }
+  </script>
+
+  <div class="section">
+    <h2>🖱️ Click Counter Game</h2>
+    <p>How many times can you click in 5 seconds?</p>
+    <button onclick="startClickGame()">Start Game</button>
+    <p id="clickResult"></p>
+
+    <script>
+      let clickCount = 0;
+      function startClickGame() {
+        clickCount = 0;
+        const result = document.getElementById('clickResult');
+        result.textContent = "Click now!";
+        document.body.addEventListener('click', clickTracker);
+        setTimeout(() => {
+          document.body.removeEventListener('click', clickTracker);
+          result.textContent = `Time's up! You clicked ${clickCount} times.`;
+        }, 5000);
+      }
+      function clickTracker() {
+        clickCount++;
+      }
+    </script>
+  </div>
+
+  <div class="section">
+    <h2>⚡ Reaction Speed Test</h2>
+    <p>Click the button *as soon* as it turns green.</p>
+    <button id="reactionButton" style="background-color: red;" onclick="reactionStart()">Wait...</button>
+    <p id="reactionTime"></p>
+
+    <script>
+      let startTime;
+      function reactionStart() {
+        if (document.getElementById('reactionButton').style.backgroundColor === "green") {
+          const end = new Date().getTime();
+          const reaction = end - startTime;
+          document.getElementById('reactionTime').textContent = `Your reaction time: ${reaction} ms`;
+          document.getElementById('reactionButton').textContent = "Play Again";
+          document.getElementById('reactionButton').style.backgroundColor = "red";
+        } else {
+          document.getElementById('reactionButton').textContent = "Wait for green...";
+          setTimeout(() => {
+            document.getElementById('reactionButton').style.backgroundColor = "green";
+            document.getElementById('reactionButton').textContent = "CLICK!";
+            startTime = new Date().getTime();
+          }, Math.random() * 3000 + 1000); // 1–4 sec
+        }
+      }
+    </script>
+  </div>
+</body>
+</html>
